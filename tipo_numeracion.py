@@ -19,14 +19,20 @@ class tipo_numeracion:
         self.tipo_red = lista_valores[12]
         self.modalidad = lista_valores[13]
         self.razon_social = lista_valores[14]
+        self.fecha_asignacion = lista_valores[15]
+        self.fecha_consolidacion = lista_valores[16]
+        self.fecha_migracion = lista_valores[17]
+        self.NIR_anterior = lista_valores[18]
         
 
 
 def main():
+    number_tree = Radix_tree()
     with open('pnn.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file) ##.reader uses dialect for preset parameters of what it expects file to be
         ##by default it expects values to be separated by a comma
         next(csv_reader) ##Skips first row
         for line in csv_reader:
-            tipo_numeracion(line)
+            new_numeracion = tipo_numeracion(line)
+            number_tree.insert(new_numeracion)
         
