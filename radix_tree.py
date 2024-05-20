@@ -17,18 +17,16 @@ class Radix_tree:
         first_six_numbers = NIR + SERIE
         curr_node = self.root
         for num in first_six_numbers:
-            if curr_node[int(num)] is None:
-                curr_node[int(num)] = Node()
-            curr_node = curr_node(int(num))
+            if curr_node.children[int(num)] is None:
+                curr_node.children[int(num)] = Node()
+            curr_node = curr_node.children[int(num)]
         ###Now organize values in range values, add to list and set list as 
         ##Key value in leaf node with dictionary
         initial_value = int(numeracion_node.NUM_INICIAL)
         final_value = int(numeracion_node.NUM_FINAL)
-        list_of_range = []
-        list_of_range[0] = initial_value
-        list_of_range[1] = final_value
+        tuple_key = (initial_value, final_value)
         curr_node.is_end_of_SERIE = True
-        curr_node.dict_of_ranges[list_of_range] = numeracion_node
+        curr_node.dict_of_ranges[tuple_key] = numeracion_node
 
 
     def search(self, num):
@@ -40,14 +38,13 @@ class Radix_tree:
         last_four = num[6] + num[7] + num[8] + num[9]
         curr_node = self.root
         for path in first_six:
-            if curr_node[int(path)] == None:
+            if curr_node.children[int(path)] == None:
                 return "Phone number not in database"
-            curr_node = curr_node[int(path)]
+            curr_node = curr_node.children[int(path)]
         if (curr_node.is_end_of_SERIE == False):
             return "Something wrong with tree"
-        for keys in curr_node.dict_of_ranges:
-            initial = int(keys[0])
-            final = int(keys[1])
-            if initial <= last_four <= final:
-                numeracion = curr_node.dict_of_ranges[keys]
-                return f"Razon social: {numeracion.razon_social}, Tipo Red: {numeracion.tipo_red}"
+        for initial, final in curr_node.dict_of_ranges:
+            if initial <= int(last_four) <= final:
+                numeracion = curr_node.dict_of_ranges[(initial, final)]
+                return f"Razon social: {numeracion.razon_social}, Tipo Red: {numeracion.tipo_red}, Poblacion: {numeracion.poblacion}"
+        return "Phone number not in database"

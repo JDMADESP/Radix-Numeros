@@ -26,18 +26,31 @@ class tipo_numeracion:
         
 
 
-def main():
-    number_tree = Radix_tree()
-    with open('pnn.csv', 'r') as csv_file:
+def list_csv(filename):
+    my_list = []
+    with open(filename, 'r') as csv_file:
         csv_reader = csv.reader(csv_file) ##.reader uses dialect for preset parameters of what it expects file to be
         ##by default it expects values to be separated by a comma
         next(csv_reader) ##Skips first row
-        for line in csv_reader:
-            print("HERE")
-            new_numeracion = tipo_numeracion(line)
-            number_tree.insert(new_numeracion)
-        print("FINISHED FOR LOOP")
-    print("LEFT")
-    x = number_tree.search("5674358796")
-    print(x)
+        for row in csv_reader:
+            my_list.append(row)
+        return my_list
         
+
+number_tree = Radix_tree()
+list_of_csv = list_csv('pnn.csv')
+for line in list_of_csv:
+    new_numeracion = tipo_numeracion(line)
+    number_tree.insert(new_numeracion)
+
+A = "2463025555" #AT&T COMERCIALIZACION MOVIL, S. DE R.L. DE C.V., MOVIL (661)
+B = "7472617821" #AT&T COMERCIALIZACION MOVIL, S. DE R.L. DE C.V., MOVIL (419)
+C = "3241795643" #AT&T COMERCIALIZACION MOVIL, S. DE R.L. DE C.V., MOVIL (33457)
+D = "6873045647" #AT&T COMERCIALIZACION MOVIL, S. DE R.L. DE C.V., MOVIL (45000)
+E =  "4111795674" #AT&T COMERCIALIZACION MOVIL, S. DE R.L. DE C.V., MOVIL (163589)
+assert "Razon social: AT&T COMERCIALIZACION MOVIL, S. DE R.L. DE C.V., Tipo Red: MOVIL, Poblacion: TLAXCALA DE XICOHTENCATL" == number_tree.search(A)
+assert "Razon social: AT&T COMERCIALIZACION MOVIL, S. DE R.L. DE C.V., Tipo Red: MOVIL, Poblacion: CHILPANCINGO DE LOS BRAVO" == number_tree.search(B)
+assert "Razon social: AT&T COMERCIALIZACION MOVIL, S. DE R.L. DE C.V., Tipo Red: MOVIL, Poblacion: IXTLAN DEL RIO" == number_tree.search(C)
+assert "Razon social: AT&T COMERCIALIZACION MOVIL, S. DE R.L. DE C.V., Tipo Red: MOVIL, Poblacion: GUASAVE" == number_tree.search(D)
+assert "Razon social: AT&T COMERCIALIZACION MOVIL, S. DE R.L. DE C.V., Tipo Red: MOVIL, Poblacion: CORTAZAR" == number_tree.search(E)
+print("Passed all tests")
