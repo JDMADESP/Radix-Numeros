@@ -34,8 +34,8 @@ class Radix_tree:
             return "You did not enter a valid phone number"
         if (num.isdigit() == False):
             return "You did not enter a valid phone number"
-        first_six = num[0] + num[1] + num[2] + num[3] + num[4] + num[5]
-        last_four = num[6] + num[7] + num[8] + num[9]
+        first_six = num[0:6]
+        last_four = num[6:10]
         curr_node = self.root
         for path in first_six:
             if curr_node.children[int(path)] == None:
