@@ -33,6 +33,11 @@ def main():
         ##by default it expects values to be separated by a comma
         next(csv_reader) ##Skips first row
         for line in csv_reader:
+            print("HERE")
             new_numeracion = tipo_numeracion(line)
             number_tree.insert(new_numeracion)
+        print("FINISHED FOR LOOP")
+    print("LEFT")
+    x = number_tree.search("5674358796")
+    print(x)
         
