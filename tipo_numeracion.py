@@ -44,3 +44,10 @@ def create_tree():
         new_numeracion = tipo_numeracion(line)
         number_tree.insert(new_numeracion)
     return number_tree
+
+
+new_tree = create_tree()
+while True:
+    number = input("Search Number:")
+    output = new_tree.search(number)
+    print(output)

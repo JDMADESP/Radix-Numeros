@@ -17,3 +17,4 @@ class test_pnn(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+    ##Run with python test_cases.py
