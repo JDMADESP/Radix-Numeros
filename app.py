@@ -1,5 +1,35 @@
 import csv
 from radix_tree import *
+from flask import Flask, render_template, request, jsonify, make_response
+
+
+created_tree = None
+
+app = Flask(__name__)
+app.json.sort_keys = False
+
+
+
+@app.route("/", methods=["GET", "POST"])
+async def index():
+  if request.method == "POST":
+    global created_tree
+    if request.is_json: ##Get JSON Terms and ASYNCHRONOUS
+      data = request.get_json()
+      if not data:
+        return jsonify({"error":"Incorrect Data"})
+      numbers_test = data["Numbers"]
+      if not numbers_test:
+        return jsonify({"error":"Incorrect Numbers Data"})
+      return_list = []
+      for num in numbers_test:
+        info_of_number = created_tree.search(num)
+        return_list.append(info_of_number)
+      return jsonify({"Numbers":return_list})
+  else:
+    new_tree = create_tree()
+    created_tree = new_tree
+    return jsonify({"Success":"Tree Created"})
 
 
 class tipo_numeracion:
@@ -44,10 +74,3 @@ def create_tree():
         new_numeracion = tipo_numeracion(line)
         number_tree.insert(new_numeracion)
     return number_tree
-
-
-# new_tree = create_tree()
-# while True:
-#     number = input("Search Number:")
-#     output = new_tree.search(number)
-#     print(output) 
