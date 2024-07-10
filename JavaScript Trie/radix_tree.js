@@ -1,4 +1,4 @@
-
+//npm run dev to run React site
 
 class Node{
     constructor(){
@@ -18,13 +18,13 @@ class EndNode{
 
 class Radix_tree{
     constructor(){
-        this.root = Node();
+        this.root = new Node();
     }
 
     insert(numeracion_node) {
         let NIR = numeracion_node.NIR;
         let SERIE = numeracion_node.SERIE;
-        first_six_numbers = NIR + SERIE;
+        let first_six_numbers = NIR + SERIE;
         let curr_node = this.root;
         for (const num in first_six_numbers){
             if (!curr_node.children[num]){
@@ -67,3 +67,5 @@ class Radix_tree{
         return "Phone number not in Database"
     }
 }
+
+export default Radix_tree

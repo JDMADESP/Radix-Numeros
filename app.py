@@ -1,11 +1,12 @@
 import csv
 from radix_tree import *
 from flask import Flask, render_template, request, jsonify, make_response
-
+from flask_cors import CORS
 
 created_tree = None
 
 app = Flask(__name__)
+cors = CORS(app, origins='*')
 app.json.sort_keys = False
 
 
@@ -26,10 +27,12 @@ async def index():
         info_of_number = created_tree.search(num)
         return_list.append(info_of_number)
       return jsonify({"Numbers":return_list})
+    return "YOUR MOM"
   else:
     new_tree = create_tree()
     created_tree = new_tree
-    return jsonify({"Success":"Tree Created"})
+    # return jsonify({"Success":"Tree Created"})
+    return "TREE CREATED"
 
 
 class tipo_numeracion:
@@ -74,3 +77,7 @@ def create_tree():
         new_numeracion = tipo_numeracion(line)
         number_tree.insert(new_numeracion)
     return number_tree
+
+
+if __name__ == "__main__":
+   app.run(debug=True, port=8080)
